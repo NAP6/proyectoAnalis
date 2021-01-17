@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualizador</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <img id="play" alt="" srcset="" />
+
+    <script>
+      var username = "nicolas";
+      var password = "1234";
+      var socket = io();
+      socket.emit("authentication", { username: username, password: password });
+      socket.on("unauthorized", function (err) {
+        console.log("There was an error with the authentication:", err.message);
+      });
+
+      socket.on(username, (data) => {
+        console.log(data);
+        let img = document.getElementById("play");
+        img.src = data.img;
+      });
+    </script>
+  </body>
+</html>
